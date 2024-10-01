@@ -10,10 +10,10 @@ from geopy.geocoders import Nominatim
 
 geolocator = Nominatim(user_agent="https://nominatim.openstreetmap.org/ui/search.html")
 
-text_location_depart = st.text_input("Adress_depart")
-location = geolocator.geocode(text_location_depart)
-text_location_arrivee = st.text_input("Adress_arrivee")
-location1 = geolocator.geocode(text_location_arrivee)
+text_location_departure = st.text_input("Adress_departure")
+location = geolocator.geocode(text_location_departure)
+text_location_arrival = st.text_input("Adress_arrival")
+location1 = geolocator.geocode(text_location_arrival)
 
 
 print(location.address)
