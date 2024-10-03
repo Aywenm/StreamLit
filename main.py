@@ -22,7 +22,7 @@ if (d != '') and (a != ''):
     lat0, lat1, lon0, lon1 = location.latitude, location1.latitude, location.longitude, location1.longitude
     data = {"lat": [lat0,lat1], "lon": [lon0, lon1]}
     df = pd.DataFrame(data)
-    st.map(df)
+    #st.map(df)
 
 
 req = 'http://router.project-osrm.org/route/v1/driving/'+str(lon0)+','+str(lat0)+';'+str(lon1)+','+str(lat1)
@@ -32,10 +32,13 @@ print(req)
 rep = requests.get(req).json()
 print(rep)
 
+print(f"La durée : {duree_result:.2f} min")
+print(f"La distance : {dist_result:.2f} km")
+
 print(lat0,lat1)
 print(lon0,lon1)
 points =rep['routes'][0]['geometry']['coordinates']
-print(points[:10])
+print(rep)
 
 X = [i[0] for i in points]
 Y = [i[1] for i in points]
