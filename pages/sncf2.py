@@ -3,9 +3,21 @@ import requests
 from geopy.geocoders import Nominatim
 import folium
 import json
-
+from css import add_custom_css
+add_custom_css()
 ####################################################################################################################################
 
+st.markdown(
+    """
+    <style>
+    .duration {
+        font-size: 1.2em;
+        color: #4CAF50;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 geolocator = Nominatim(user_agent="mobility_app")
 colors = ['orange', 'blue', 'lightred', 'pink', 'black', 'beige', 'gray', 'lightgreen', 'darkpurple', 'cadetblue', 
           'darkred', 'lightgray', 'white', 'purple', 'red', 'green', 'darkblue', 'darkgreen', 'lightblue']
@@ -46,7 +58,7 @@ def get_train_route(start_coords, end_coords):
 ####################################################################################################################################
 
 # on prend 2 villes en entree, une de depart, et une d'arrivee
-d = st.sidebar.text_input("Adresse de départ", 'Chateaulin, Finistère, France')
+d = st.sidebar.text_input('Adresse de départ', 'Chateaulin, Finistère, France')
 a = st.sidebar.text_input("Adresse d'arrivée", 'Vidauban, France')
 
 # on convertit en coordonnées gps
@@ -81,9 +93,15 @@ if not 'error' in reponse_json:
                 if 'geojson' in section:
                     dest_type = section['to']['embedded_type']
                     if dest_type == 'stop_point':
-                        st.sidebar.text(getDateAndTime(dtimeSec)+'\nAller à la gare de : '+section['to']['name'])
+                        st.sidebar.markdown(
+                            f"<div class='duration'>{getDateAndTime(dtimeSec)}<br>Aller à la gare de : {section['to']['name']}</div>",
+                            unsafe_allow_html=True
+                        )
                     elif dest_type == 'address':   
-                        st.sidebar.text(getDateAndTime(dtimeSec)+'\nAller à : '+section['to']['name']+'\nvous êtes arrivé')
+                        st.sidebar.markdown(
+                            f"<div class='duration'>{getDateAndTime(dtimeSec)}<br>Aller à : {section['to']['name']}<br>vous êtes arrivé</div>",
+                            unsafe_allow_html=True
+                        )
                     for coords in section['geojson']['coordinates']:
                         folium.CircleMarker([coords[1],coords[0]], radius = 5, color ='green', weight=1, 
                             fill_opacity=0.5, fill_color='green').add_to(m)
@@ -105,7 +123,10 @@ if not 'error' in reponse_json:
                     sectionNb += 1
                     folium.PolyLine(locations=poly, color="gray", weight=5, tooltip="Section "+str(sectionNb)).add_to(m)
             
-    st.sidebar.text('depart : '+getDateAndTime(dtime)+'\narrivee : '+getDateAndTime(atime))
+    st.sidebar.markdown(
+        f"<div class='duration'>Départ : {getDateAndTime(dtime)}<br>Arrivée : {getDateAndTime(atime)}</div>",
+        unsafe_allow_html=True
+    )
  
 st.components.v1.html(folium.Figure().add_child(m).render(), width=800, height=600)
 

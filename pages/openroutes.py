@@ -5,28 +5,12 @@ from streamlit_folium import folium_static
 from datetime import datetime
 import requests
 import pandas
+from css import add_custom_css
 
-
-# Ajouter du CSS personnalisé
-st.markdown("""
-    <style>
-    .main-title {
-        font-size: 2em;
-        color: #4CAF50;
-        text-align: center;
-    }
-    .duration {
-        font-size: 1.2em;
-        color: #4CAF50;
-    }
-    [data-testid=stSidebar] {
-        background-color: #ff000050;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+add_custom_css()
 
 # Interface utilisateur
-st.sidebar.markdown('<h1 class="main-title">App Mobilité</h1>', unsafe_allow_html=True)
+st.sidebar.markdown('<h1 class="main-title">maps</h1>', unsafe_allow_html=True)
 
 # Configurer la clé API OpenRouteService
 ORS_API_KEY = '5b3ce3597851110001cf6248d87ebef9775a424eb4d2215e846dc6bf'# clé api open route service
@@ -142,6 +126,7 @@ if st.sidebar.button('Calculer le trajet'):
     if duration and distance and route:# Vérifier si les informations de trajet existent
         st.sidebar.markdown(f'<p class="duration">Durée: {duration:.5f} minutes</p>', unsafe_allow_html=True)
         st.sidebar.markdown(f'<p class="duration">Distance: {distance:.2f} km</p>', unsafe_allow_html=True)
+        st.write(f"le moyen de transport selectionner est {mode}")
         route_map = display_route_map(route)# Afficher la carte avec le trajet
         folium_static(route_map)# Afficher la carte
     else:

@@ -5,7 +5,9 @@ from streamlit_folium import folium_static
 from datetime import datetime
 import requests
 import pandas
+from css import add_custom_css
 
+add_custom_css()
 headers = {
     'API-Key': 'xnvqbybpr9jqmnkk4k837p7e',
     'Content-Type': 'application/x-www-form-urlencoded',
@@ -15,6 +17,11 @@ response = requests.get(
     'https://api.airfranceklm.com/opendata/flightstatus?startRange=2024-12-31T09:00:00Z&endRange=2024-12-31T23:59:59Z',
     headers=headers,
 )
+
+
+
+# Interface utilisateur
+st.sidebar.markdown('<h1 class="main-title">Avion</h1>', unsafe_allow_html=True)
 
 # vérifier si la requete a réussi
 if response.status_code == 200:
@@ -64,21 +71,17 @@ if st.sidebar.button('Calculer le trajet'):
                 status = flight_leg['statusName']
                 départ_time = flight_leg['departureInformation']['times']['scheduled']
                 arrivée_time = flight_leg['arrivalInformation']['times']['scheduled']
-                st.sidebar.write("Calcul du trajet en avion")
-                st.sidebar.write(f"Trajet de {from_address_input} à {to_address_input}")
-                st.sidebar.write(f"Date de départ : {départ_time}")
-                st.sidebar.write(f"Date d'arrivée : {arrivée_time}")
-                st.sidebar.write(f"Statut du vol : {status}")
+                st.sidebar.write('<h1 class="main-title">Calcul du trajet en avion</h1>', unsafe_allow_html=True)
+                st.sidebar.write(f'<p class="duration">Trajet de {from_address_input} à {to_address_input}</p>', unsafe_allow_html=True)
+                st.sidebar.write(f'<p class="duration">Date de départ : {départ_time}</p>', unsafe_allow_html=True)
+                st.sidebar.write(f'<p class="duration">Date d arrivée : {arrivée_time}</p>', unsafe_allow_html=True)
+                st.sidebar.write(f'<p class="duration">Statut du vol : {status}</p>', unsafe_allow_html=True)
+               
                 # Afficher les coordonnées de départ et d'arrivée
                 départ_longitude = flight_leg['departureInformation']['airport']['location']['longitude']
                 départ_latitude = flight_leg['departureInformation']['airport']['location']['latitude']
                 arrivée_longitude = flight_leg['arrivalInformation']['airport']['location']['longitude']
                 arrivée_latitude = flight_leg['arrivalInformation']['airport']['location']['latitude']
-
-                st.sidebar.write(f"  Longitude départ : {départ_longitude}")
-                st.sidebar.write(f"  Latitude départ : {départ_latitude}")
-                st.sidebar.write(f"  Longitude arrivé : {arrivée_longitude}")
-                st.sidebar.write(f"  Latitude arrive : {arrivée_latitude}")
 
                 # Créer une carte Folium
                 m = folium.Map(location=[(départ_latitude + arrivée_latitude) / 2, (départ_longitude + arrivée_longitude) / 2], zoom_start=3)
@@ -100,6 +103,5 @@ if st.sidebar.button('Calculer le trajet'):
             
                 # Afficher la carte dans Streamlit
                 folium_static(m)
-                break
-            
                 
+                break

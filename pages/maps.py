@@ -94,10 +94,10 @@ import numpy as np
 import requests
 from geopy.geocoders import Nominatim
 import os
-
+from css import add_custom_css
 st.title('Mobility App')
 st.sidebar.title('Rechercher un itinéraire')
-
+add_custom_css()
 geolocator = Nominatim(user_agent="mobility_app")
 
 d = st.sidebar.text_input("Adresse de départ", 'Pontivy, France')
