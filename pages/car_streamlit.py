@@ -7,12 +7,13 @@ from io import StringIO
 from sklearn.metrics.pairwise import haversine_distances
 from math import radians
 from geopy.geocoders import Nominatim
-
+from css import add_custom_css
 import pandas as pd
 import json
 import datetime
 import streamlit as st 
 
+add_custom_css()
 #Pick the file use to obtain the data
 url = "https://www.data.gouv.fr/fr/datasets/r/fd54f81f-4389-4e73-be75-491133d011c3"
 data = ""
@@ -56,13 +57,13 @@ def harversine_bus(x, y):
 # User choice for the departure and the arrival for their travel
 geolocator = Nominatim(user_agent="https://nominatim.openstreetmap.org/ui/search.html")
 
-location_departure = st.text_input("Adress_departure")
+location_departure = st.sidebar.text_input("Adress_departure")
 location = geolocator.geocode(location_departure)
 print((location.latitude, location.longitude))
 test_harver, code_name_station, code_station = harversine_bus(location.latitude, location.longitude)
 print("Departure shedule station : ", test_harver, code_name_station, code_station)
 
-location_arrival = st.text_input("Adress Arrival")
+location_arrival = st.sidebar.text_input("Adress Arrival")
 location_arrival= geolocator.geocode(location_arrival)
 print(location_arrival.latitude, location_arrival.longitude)
 
@@ -70,9 +71,9 @@ test_harver2, code_name_station, code_station = harversine_bus(location_arrival.
 print("Arrival shedule station: ", test_harver2, code_name_station, code_station)
 
 # User choice for the date and the hour 
-d = st.date_input("Set your date ")
+d = st.sidebar.date_input("Set your date ")
 st.write("Your travel is set to", d)
-t = st.time_input("Set a hour of departure for", value=None)
+t = st.sidebar.time_input("Set a hour of departure for", value=None)
 st.write("The hour of departure is set to", t)
 
 def shedule_bus(code_station, starter_time):
@@ -91,3 +92,4 @@ def shedule_bus(code_station, starter_time):
     return dep, min_times
 
 print(shedule_bus(code_station, str(t)))
+st.sidebar.write("The departure shedule is set to", shedule_bus(code_station, str(t)))
