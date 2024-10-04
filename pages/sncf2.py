@@ -40,8 +40,7 @@ def get_train_route(start_coords, end_coords):
     #url += "&mode=networks"
     # url += "&datetime=20241002T160440"
     response = requests.get(url, headers=headers)
-    with open('data.json', 'w', encoding='utf-8') as f:
-        json.dump(response.json(), f)
+   
     return response.json()
 
 ####################################################################################################################################
