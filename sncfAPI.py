@@ -48,20 +48,20 @@ def get_train_route(start_coords, end_coords):
 
 geolocator = Nominatim(user_agent="mobility_app")
 
-# d = 'Brest, France'
-# a = 'Marseille, France'
-# location = geolocator.geocode(d)
-# location1 = geolocator.geocode(a)
-# lat0, lon0 = location.latitude, location.longitude
-# lat1, lon1 = location1.latitude, location1.longitude
+d = 'Brest, France'
+a = 'Marseille, France'
+location = geolocator.geocode(d)
+location1 = geolocator.geocode(a)
+lat0, lon0 = location.latitude, location.longitude
+lat1, lon1 = location1.latitude, location1.longitude
 
-#brest
-lat0 = 48.389870
-lon0 = -4.487180
+# #brest
+# lat0 = 48.389870
+# lon0 = -4.487180
 
-#marseille
-lat1 = 43.296482
-lon1 = 5.369780
+# #marseille
+# lat1 = 43.296482
+# lon1 = 5.369780
 
 start_coords = [lat0, lon0]
 end_coords = [lat1, lon1]
