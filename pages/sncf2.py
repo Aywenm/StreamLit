@@ -44,7 +44,7 @@ def getDateAndTime(dt):
 
 def get_train_route(start_coords, end_coords):
     url0 = 'https://api.sncf.com/v1/coverage/sncf/'
-    SNCF_API_KEY = "c6abef60-03b3-4e1c-90c9-275e9c168fdb"
+    SNCF_API_KEY = "your api key"
     headers = {'Authorization': SNCF_API_KEY}
     url = f"{url0}journeys?from={start_coords[1]};{start_coords[0]}&to={end_coords[1]};{end_coords[0]}"
     url += "&free_radius_from=100&free_radius_to=100"
