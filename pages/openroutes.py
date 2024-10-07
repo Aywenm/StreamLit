@@ -13,7 +13,7 @@ add_custom_css()
 st.sidebar.markdown('<h1 class="main-title">maps</h1>', unsafe_allow_html=True)
 
 # Configurer la clé API OpenRouteService
-ORS_API_KEY = '5b3ce3597851110001cf6248d87ebef9775a424eb4d2215e846dc6bf'# clé api open route service
+ORS_API_KEY = 'Your api key'# clé api open route service
 client = openrouteservice.Client(key=ORS_API_KEY)# api open route service
 
 # Fonction pour obtenir les informations de trajet
