@@ -9,7 +9,7 @@ from css import add_custom_css
 
 add_custom_css()
 headers = {
-    'API-Key': 'xnvqbybpr9jqmnkk4k837p7e',
+    'API-Key': 'your api key',
     'Content-Type': 'application/x-www-form-urlencoded',
 }
 
